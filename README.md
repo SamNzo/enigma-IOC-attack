@@ -7,3 +7,6 @@ https://www.youtube.com/watch?v=V4V2bpZlqx8
 
 https://en.wikipedia.org/wiki/Bombe
 
+**If you are interested in the history of the enigma cryptanalysis, read the following book:**
+
+*Solving the Enigma - History of the Cryptanalytic Bombe by Jennifer Wilcox*
