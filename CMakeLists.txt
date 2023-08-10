@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 11)
 # Add the source files
 set(SOURCES
     src/ioc.cpp
+    src/findRotor.cpp
     src/main.cpp
 )
 
