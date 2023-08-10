@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(EnigmaIOCProject)
+project(Enigma-IoC-Attack)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -13,4 +13,4 @@ set(SOURCES
 include_directories(${PROJECT_SOURCE_DIR})
 
 # Create the executable
-add_executable(ioc-attack ${SOURCES})
+add_executable(ioc ${SOURCES})
