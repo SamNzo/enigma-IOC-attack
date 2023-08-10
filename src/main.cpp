@@ -1,12 +1,31 @@
 #include "../enigma/include/Enigma.h"
 #include "../include/ioc.h"
+#include "Help.cpp"
+#include <getopt.h>
 
 int main(int argc, char** argv) {
-    std::string text = "THERE ARETW OWAYS OFCON STRUC TINGA SOFTW AREDE SIGNO NEWAY ISTOM AKEIT SOSIM PLETH ATTHE REARE OBVIO USLYN ODEFI CIENC IESAN DTHEO THERW AYIST OMAKE ITSOC OMPLI CATED THATT HEREA RENOO BVIOU SDEFI CIENC IESTH EFIRS TMETH ODISF ARMOR EDIFF ICULT"; // Replace with the actual text
     
-    if (isValid(text)) {
-        float ioc = ComputeIndexOfCoincidence(text);
-        std::cout << "Index of Coincidence: " << ioc << std::endl;
+    /* Program command line options */
+    const char* const short_options = "h::r";
+    const struct option long_options[] = {
+        {"help", optional_argument, nullptr, 'h'},
+        {"rotors", required_argument, nullptr, 'r'},
+
+        {nullptr, 0, nullptr, 0}
+    };
+
+    /* Parse command line */
+    int option;
+
+    while ((option = getopt_long(argc, argv, short_options, long_options, nullptr)) != -1) {
+        switch (option) {
+            case 'h':
+                {
+                    printHelp();
+                    return EXIT_SUCCESS;
+                }
+                break;
+        }
     }
 
     return 0;
