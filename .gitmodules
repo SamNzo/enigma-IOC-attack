@@ -1,0 +1,3 @@
+[submodule "enigma"]
+	path = enigma
+	url = https://github.com/SamNzo/enigma
