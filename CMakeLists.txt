@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.12)
+project(EnigmaIOCProject)
+
+set(CMAKE_CXX_STANDARD 11)
+
+# Add the source files
+set(SOURCES
+    src/ioc.cpp
+    src/main.cpp
+)
+
+# Add the include directories
+include_directories(${PROJECT_SOURCE_DIR})
+
+# Create the executable
+add_executable(ioc-attack ${SOURCES})
