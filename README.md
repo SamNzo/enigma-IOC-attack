@@ -5,10 +5,19 @@ The attack is presented in the following paper: **Ciphertext-only cryptanalysis 
 
 # Installation
 
+Clone repository
 ```
 git clone https://github.com/SamNzo/enigma-IoC-attack.git
 ```
 
+Init & update enigma submodule
+```
+cd enigma-IoC-attack/enigma
+git submodule init
+git submodule update
+```
+
+Build executable
 ```
 cd enigma-IoC-attack
 chmod +x make.sh
