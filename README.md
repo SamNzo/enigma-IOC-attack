@@ -1,18 +1,7 @@
 # Enigma Index of Coincidence (IoC) attack
 C++ implementation of ciphertext-only attack (IoC) on Enigma 
 
-```
- ______            ______          ________  __    __  ______   ______   __       __   ______  
-|      \          /      \        |        \|  \  |  \|      \ /      \ |  \     /  \ /      \ 
- \$$$$$$ ______  |  $$$$$$\       | $$$$$$$$| $$\ | $$ \$$$$$$|  $$$$$$\| $$\   /  $$|  $$$$$$\
-  | $$  /      \ | $$   \$$______ | $$__    | $$$\| $$  | $$  | $$ __\$$| $$$\ /  $$$| $$__| $$
-  | $$ |  $$$$$$\| $$     |      \| $$  \   | $$$$\ $$  | $$  | $$|    \| $$$$\  $$$$| $$    $$
-  | $$ | $$  | $$| $$   __ \$$$$$$| $$$$$   | $$\$$ $$  | $$  | $$ \$$$$| $$\$$ $$ $$| $$$$$$$$
- _| $$_| $$__/ $$| $$__/  \       | $$_____ | $$ \$$$$ _| $$_ | $$__| $$| $$ \$$$| $$| $$  | $$
-|   $$ \\$$    $$ \$$    $$       | $$     \| $$  \$$$|   $$ \ \$$    $$| $$  \$ | $$| $$  | $$
- \$$$$$$ \$$$$$$   \$$$$$$         \$$$$$$$$ \$$   \$$ \$$$$$$  \$$$$$$  \$$      \$$ \$$   \$$
-                                                                            
-```
+The attack is presented in the following paper: **Ciphertext-only cryptanalysis of Enigma** *by James J. Gillogly*
 
 # Installation
 
@@ -26,16 +15,52 @@ chmod +x make.sh
 ./make.sh
 ```
 
+The executable is then in the `build` directory
+
+# Usage
+
+The attack has two phases:
+- the first one determines the most likely rotor configuration (order, ring setting and starting position)
+- the second determines the plugboard connections
+
+## Rotor configuration
+The simplest way to use it is:
 ```
-cd build
-./ioc --rotors 5 --plugboard 10 <path to ciphertext file>
+./ioc --message <path to ciphertext file>
 ```
 
-Paper: **Ciphertext-only cryptanalysis of Enigma** *by James J. Gillogly*
+You can choose a custom number of rotors to test between 3 and 8.
+```
+./ioc --rotors 3 --message <path to ciphertext file>
+```
+
+For more informations: `./ioc -h rotors`
+
+You can also choose a specific reflector
+```
+./ioc --reflector C --message <path to ciphertext file>
+```
+
+For more informations: `./ioc -h reflector`
+
+The default configuration tests 5 rotors (namely rotors I, II, III, IV and V) and reflector B
+
+### Example
+To test 8 rotors with reflector C:
+
+```
+./ioc --rotors 8 --reflector C --message <path to ciphertext file>
+```
+
+The output is the 10 most likely rotor configurations regarding the IoC
+
+## Plugboard
 
 https://www.youtube.com/watch?v=V4V2bpZlqx8
 
 https://en.wikipedia.org/wiki/Bombe
+
+# Attack description
 
 **If you are interested in the history of the enigma cryptanalysis, read the following book:**
 
