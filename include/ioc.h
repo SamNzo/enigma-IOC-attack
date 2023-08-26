@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <vector>
 
-bool isValid(std::string text);
 float ComputeIndexOfCoincidence(std::string text);
 
 #endif

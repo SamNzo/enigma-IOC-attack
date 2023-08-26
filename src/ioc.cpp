@@ -1,16 +1,5 @@
 #include "../include/ioc.h"
 
-bool isValid(std::string text) {
-    // only letters
-    for (char c : text) {
-        if (!(std::isalpha(c) &&
-              ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)))) {
-            return true; // Found a non-alphabetical character
-        }
-    }
-    return false; // No non-alphabetical characters found
-}
-
 float ComputeIndexOfCoincidence(std::string text) {
     int c = 26;
     float IoC = 0;
