@@ -102,7 +102,7 @@ int main(int argc, char** argv) {
                     // Ciphertext file path
                     std::string filename = optarg;
                     ciphertextProvided = true;
-                                        
+
                     if (!openFile(filename)) {
                         return EXIT_FAILURE;
                     }
