@@ -11,6 +11,7 @@ set(SOURCES
     enigma/src/Enigma.cpp
     src/ioc.cpp
     src/findRotor.cpp
+    src/findPlugboard.cpp
     src/main.cpp
 )
 

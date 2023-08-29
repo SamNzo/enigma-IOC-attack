@@ -2,8 +2,11 @@
 #define FINDROTOR_H
 #include <iostream>
 #include <string.h>
+#include <sstream>
+#include <iterator>
+#include <vector>
 #include <map>
 
-void findRotorOrder(std::string ciphertext, int rotorNumbers, std::string reflectorWiring);
+std::vector<std::string> findRotorConfig(std::string ciphertext, int rotorNumbers, std::string reflectorWiring, bool batch);
 
 #endif

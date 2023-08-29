@@ -1,4 +1,7 @@
 #include "../include/findRotor.h"
+#include "../include/findPlugboard.h"
+#include "../enigma/include/Rotor.h"
+#include "../enigma/include/Reflector.h"
 #include "Help.cpp"
 #include <getopt.h>
 #include <fstream>
@@ -11,12 +14,23 @@ std::string ciphertext;
 bool rotorNumberProvided = false;
 bool reflectorProvided = false;
 bool ciphertextProvided = false;
+bool firstStep = false;
+bool secondStep = false;
+bool batch = false;
+
+/* Help booleans */
+bool helpRotor = false;
+bool helpReflector = false;
+bool helpAttack = false;
 
 /* Amount of rotors to try */
 int rotorNumbers = 5; // default number is 5
 
 /* Reflector */
 std::string reflectorWiring = "B"; // default wiring is B
+
+/* Rotor configuration */
+std::vector<std::string> rotorArguments;
 
 /* Function to check if ciphertext provided is valid */
 bool isValid(std::string text) {
@@ -55,12 +69,14 @@ bool openFile(const std::string &filename) {
 int main(int argc, char** argv) {
     
     /* Program command line options */
-    const char* const short_options = "h::r:c:R:";
+    const char* const short_options = "h::n:c:R:rb";
     const struct option long_options[] = {
         {"help", optional_argument, nullptr, 'h'},
-        {"rotors", required_argument, nullptr, 'r'},
+        {"rotor-number", required_argument, nullptr, 'n'},
         {"ciphertext", required_argument, nullptr, 'c'},
         {"reflector", required_argument, nullptr, 'R'},
+        {"rotors", no_argument, nullptr, 'r'},
+        {"batch", no_argument, nullptr, 'b'},
 
         {nullptr, 0, nullptr, 0}
     };
@@ -72,12 +88,24 @@ int main(int argc, char** argv) {
         switch (option) {
             case 'h':
                 {
-                    // Help
-                    printHelp();
+                    if (optarg == NULL && optind < argc && argv[optind][0] != '-') {
+                        optarg = argv[optind++];
+                        std::string argument(optarg);
+                        if (argument == "rotor") {
+                            helpRotor = true;
+                        } 
+                        else if (argument == "reflector") {
+                            helpReflector = true;
+                        }
+                        else if (argument == "attack") {
+                            helpAttack = true;
+                        }
+                    }
+                    printHelp(helpRotor, helpReflector, helpAttack);
                     return EXIT_SUCCESS;
                 }
                 break;
-            case 'r':
+            case 'n':
                 {
                     // Number of rotors to try (between 3 and 8)
                     rotorNumberProvided = true;
@@ -115,6 +143,17 @@ int main(int argc, char** argv) {
                     reflectorWiring = optarg;
                 }
                 break;
+            case 'r':
+                {
+                    // First step (rotor configuration)
+                    firstStep = true;
+                }
+                break;
+            case 'b':
+                {
+                    batch = true;
+                }
+                break;
             default:
                 std::cerr << "Invalid option" << std::endl;
                 break;
@@ -123,12 +162,47 @@ int main(int argc, char** argv) {
 
     // Check mandatory parameter
     if (!ciphertextProvided) {
-       std::cerr << "-c option is mandatory. See `./ioc-attack -h` for more information." << std::endl;
-       return EXIT_FAILURE;
+        std::cerr << "-c option is mandatory. See `./ioc-attack -h` for more information." << std::endl;
+        return EXIT_FAILURE;
     }
 
-    // find the most likely rotor order
-    findRotorOrder(ciphertext, rotorNumbers, reflectorWiring);
+    std::vector<std::string> rotorConfig;
+    rotorConfig = findRotorConfig(ciphertext, rotorNumbers, reflectorWiring, batch);
+
+    std::string userInput;
+    std::cout << "Do you want to work out the plugboard connections? (yes/no) [yes]:\n";
+    std::cin >> userInput;
+    // Convert user input to lowercase for case-insensitive comparison
+    for (char& c : userInput) {
+        c = std::tolower(c);
+    }
+
+    if (userInput == "yes" || userInput == "y") {
+        std::cout << "Proceeding...\n";
+        // find the most likely plugboard connections
+        std::vector<Rotor> rotorList;
+        std::vector<Reflector> reflectorList;
+        Reflector reflector = Reflector(rotorConfig[0]);
+        Rotor leftRotor = Rotor(rotorConfig[1], 0, stoi(rotorConfig[4]), 1);
+        Rotor middleRotor = Rotor(rotorConfig[2], stoi(rotorConfig[7]), stoi(rotorConfig[5]), 2);
+        Rotor rightRotor = Rotor(rotorConfig[3], stoi(rotorConfig[8]), stoi(rotorConfig[6]), 3);
+        for (int i=0; i<rotorConfig.size(); i++) {
+            std::cout << rotorConfig[i] << "\n";
+        }
+        reflectorList.push_back(reflector);
+        rotorList.push_back(leftRotor);
+        rotorList.push_back(middleRotor);
+        rotorList.push_back(rightRotor);
+        int p;
+        p = findPlugboardConnections(ciphertext, rotorList, reflectorList);
+
+    } else if (userInput == "no" || userInput == "n") {
+        return 0;
+    } else {
+        std::cerr << "Invalid input.\n";
+        return EXIT_FAILURE;
+    }
+
 
     return 0;
 }

@@ -37,19 +37,19 @@ The attack has three phases:
 ## 1. Rotor order
 The simplest way to use it is:
 ```
-./ioc --ciphertext <path to ciphertext file>
+./ioc-attack --ciphertext <path to ciphertext file>
 ```
 
 You can choose a custom number of rotors to test between 3 and 8.
 ```
-./ioc --rotors 3 --ciphertext <path to ciphertext file>
+./ioc-attack --rotors 3 --ciphertext <path to ciphertext file>
 ```
 
 For more informations: `./ioc -h rotors`
 
 You can also choose a specific reflector
 ```
-./ioc --reflector C --ciphertext <path to ciphertext file>
+./ioc-attack --reflector C --ciphertext <path to ciphertext file>
 ```
 
 For more informations: `./ioc -h reflector`
@@ -60,7 +60,7 @@ The default configuration tests 5 rotors (namely rotors I, II, III, IV and V) an
 To test 8 rotors with reflector C:
 
 ```
-./ioc --rotors 8 --reflector C --message <path to ciphertext file>
+./ioc-attack --rotors 8 --reflector C --message <path to ciphertext file>
 ```
 
 The top 10 rotor configurations are displayed as output
