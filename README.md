@@ -1,8 +1,7 @@
 # Enigma Index of Coincidence (IoC) attack
 C++ implementation of ciphertext-only attack (IoC) on Enigma 
 
-The attack is presented in the following paper: **Ciphertext-only cryptanalysis of Enigma** *by James J. Gillogly*
-https://web.archive.org/web/20060720040135/http://members.fortunecity.com/jpeschel/gillog1.htm
+The attack is presented in the following paper: [**Ciphertext-only cryptanalysis of Enigma** *by James J. Gillogly*](https://web.archive.org/web/20060720040135/http://members.fortunecity.com/jpeschel/gillog1.htm)
 
 # Installation
 
