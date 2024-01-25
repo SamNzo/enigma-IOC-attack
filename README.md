@@ -1,3 +1,4 @@
+not finished
 # Enigma Index of Coincidence (IoC) attack
 C++ implementation of ciphertext-only attack (IoC) on Enigma 
 
